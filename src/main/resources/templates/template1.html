@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestion des Patients</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/5.3.3/css/bootstrap.min.css">
+    <script src="/webjars/bootstrap/5.3.3/js/bootstrap.bundle.js"></script>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+        .content-wrapper {
+            flex: 1 0 auto;
+        }
+        footer {
+            flex-shrink: 0;
+            background-color: #f8f9fa;
+            padding: 1rem;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid">
+        <a class="navbar-brand" th:href="@{/index}">
+            <img src="/images/img.png" alt="Logo" style="width:40px;" class="rounded-pill me-2">
+            Gestion Patients
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
+                aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarContent">
+            <ul class="navbar-nav ms-auto">
+                <!-- Dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        Actions
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" th:href="@{/formPatient}">Nouveau Patient</a></li>
+                        <li><a class="dropdown-item" th:href="@{/index}">Modifier un Patient</a></li>
+                        <li>
+                            <form class="d-flex px-3" th:action="@{/index}" method="get">
+                                <input class="form-control form-control-sm me-2" type="search" name="keyword"
+                                       placeholder="Chercher..." aria-label="Chercher">
+                                <button class="btn btn-sm btn-outline-primary" type="submit">OK</button>
+                            </form>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Zone de contenu qui s'adapte à la taille disponible -->
+<div class="container mt-4 content-wrapper" layout:fragment="content1">
+    <!-- Le contenu des pages s’insère ici -->
+</div>
+
+<!-- Footer fixe en bas -->
+<footer class="text-center text-muted">
+    <small>&copy; 2025 - Application Gestion des Patients</small>
+</footer>
+
+</body>
+</html>

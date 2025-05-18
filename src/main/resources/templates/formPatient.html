@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Formulaire Patient</title>
+  <link href="/webjars/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+
+<div class="container mt-5">
+  <h2 th:text="${patient.id} == null ? 'Ajouter un Patient' : 'Modifier le Patient'" class="mb-4"></h2>
+
+  <form th:action="@{/save}" th:object="${patient}" method="post">
+    <input type="hidden" th:field="*{id}"/>
+    <div class="mb-3">
+      <label>Nom :</label>
+      <input type="text" class="form-control" th:field="*{nom}" required/>
+    </div>
+    <div class="mb-3">
+      <label>Prénom :</label>
+      <input type="text" class="form-control" th:field="*{prenom}" required/>
+    </div>
+    <div class="mb-3">
+      <label>Date de naissance :</label>
+      <input type="date" class="form-control" th:field="*{dateNaissance}" required/>
+    </div>
+    <div class="mb-3 form-check">
+      <input type="checkbox" class="form-check-input" th:field="*{malade}"/>
+      <label class="form-check-label">Malade</label>
+    </div>
+    <div class="mb-3">
+      <label>Score :</label>
+      <input type="number" class="form-control" th:field="*{score}" required/>
+    </div>
+    <button type="submit" class="btn btn-primary">Enregistrer</button>
+    <a th:href="@{/index}" class="btn btn-secondary">Annuler</a>
+  </form>
+</div>
+
+</body>
+</html>
