@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Connexion | Gestion Patients</title>
+    <link href="/webjars/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/webjars/bootstrap-icons/1.13.1/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4e73df;
+            --secondary-color: #f8f9fc;
+        }
+        body {
+            background-color: var(--secondary-color);
+            background-image: linear-gradient(180deg, var(--primary-color) 10%, #224abe 100%);
+            background-size: cover;
+            height: 100vh;
+        }
+        .login-card {
+            border-radius: 15px;
+            box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+            border: none;
+        }
+        .card-header {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: 600;
+            border-radius: 15px 15px 0 0 !important;
+            text-align: center;
+            padding: 1.5rem;
+        }
+        .btn-login {
+            background-color: var(--primary-color);
+            border: none;
+            padding: 0.5rem 2rem;
+            transition: all 0.3s;
+        }
+        .btn-login:hover {
+            background-color: #2e59d9;
+            transform: translateY(-2px);
+        }
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.25rem rgba(78, 115, 223, 0.25);
+        }
+        .bi-input-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary-color);
+        }
+        .input-group {
+            position: relative;
+        }
+        .form-control {
+            padding-left: 40px;
+        }
+    </style>
+</head>
+<body class="d-flex align-items-center">
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-5 col-md-7">
+            <div class="card login-card">
+                <div class="card-header">
+                    <i class="bi bi-shield-lock me-2"></i>CONNEXION
+                </div>
+                <div class="card-body p-4">
+                    <form method="post" th:action="@{/login}">
+                        <!-- Username Field -->
+                        <div class="mb-4">
+                            <label for="username" class="form-label fw-bold text-muted">
+                                <i class="bi bi-person me-1"></i>Nom d'utilisateur</label>
+                            <div class="input-group">
+                                <i class="bi bi-person-fill bi-input-icon"></i>
+                                <input type="text" class="form-control py-2" id="username"
+                                       placeholder="Votre nom d'utilisateur" name="username" required>
+                            </div>
+                        </div>
+
+                        <!-- Password Field -->
+                        <div class="mb-4">
+                            <label for="password" class="form-label fw-bold text-muted">
+                                <i class="bi bi-key me-1"></i>Mot de passe</label>
+                            <div class="input-group">
+                                
+                                <input type="password" class="form-control py-2" id="password"
+                                       placeholder="Votre mot de passe" name="password" required>
+                            </div>
+                        </div>
+
+                        <!-- Remember Me -->
+                        <div class="mb-4 form-check">
+                            <input type="checkbox" class="form-check-input" id="remember" name="remember-me">
+                            <label class="form-check-label text-muted" for="remember">
+                                Se souvenir de moi
+                            </label>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-login text-white rounded-pill py-2">
+                                <i class="bi bi-box-arrow-in-right me-2"></i>Se connecter
+                            </button>
+                        </div>
+
+                        <!-- Error Message -->
+                        <div th:if="${param.error}" class="alert alert-danger mt-3">
+                            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                            Identifiants incorrects. Veuillez réessayer.
+                        </div>
+                    </form>
+                </div>
+                <div class="card-footer text-center py-3">
+                    <small class="text-muted">
+                        <i class="bi bi-info-circle-fill me-1"></i>
+                        Système de gestion des patients © 2025
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
