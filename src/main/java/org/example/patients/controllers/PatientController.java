@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,7 +24,7 @@ public class PatientController {
     @Autowired
     private PatientRepository patientRepository;
 
-    @GetMapping("/index")
+    @GetMapping("/user/index")
     public String index(Model model,
                         @RequestParam(name = "page", defaultValue = "0") int page,
                         @RequestParam(name = "size", defaultValue = "5") int size,
@@ -36,7 +37,8 @@ public class PatientController {
         return "patients";
     }
 
-    @GetMapping("/delete")
+    @GetMapping("/admin/delete")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String delete(@RequestParam Long id,
                          @RequestParam int page,
                          @RequestParam String keyword,
@@ -47,16 +49,18 @@ public class PatientController {
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("error", "Erreur lors de la suppression du patient");
         }
-        return "redirect:/index?page=" + page + "&keyword=" + keyword;
+        return "redirect:/user/index?page=" + page + "&keyword=" + keyword;
     }
-    @GetMapping("/formPatient")
+    @GetMapping("/admin/formPatient")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String formPatient(Model model) {
         model.addAttribute("patient", new Patient());
         model.addAttribute("title", "Ajouter un Patient");
         return "formPatient";
     }
 
-    @PostMapping("/save")
+    @PostMapping("/admin/save")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String savePatient(@Valid @ModelAttribute Patient patient,
                               BindingResult result,
                               Model model,
@@ -68,11 +72,12 @@ public class PatientController {
         patientRepository.save(patient);
         redirectAttributes.addFlashAttribute("message",
                 patient.getId() == null ? "Patient ajouté avec succès" : "Patient modifié avec succès");
-        return "redirect:/index";
+        return "redirect:/user/index";
     }
 
 
-    @GetMapping("/editPatient")
+    @GetMapping("/admin/editPatient")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String editPatient(Model model, @RequestParam Long id) {
         Optional<Patient> patient = patientRepository.findById(id);
         if (patient.isPresent()) {
@@ -80,7 +85,13 @@ public class PatientController {
             model.addAttribute("title", "Modifier le Patient");
             return "formPatient";
         } else {
-            return "redirect:/index?error=PatientNotFound";
+            return "redirect:/user/index?error=PatientNotFound";
         }
-    }}
+    }
+
+    @GetMapping("/")
+    public String home() {
+        return "redirect:/user/index";
+    }
+}
 

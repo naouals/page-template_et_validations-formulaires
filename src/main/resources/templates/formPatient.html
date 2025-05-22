@@ -1,17 +1,19 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<html xmlns:th="http://www.thymeleaf.org" lang="fr"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="template1">
 <head>
   <meta charset="UTF-8">
   <title>Formulaire Patient</title>
   <link href="/webjars/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-
+<div layout:fragment="content1">
 
 <div class="container mt-5">
   <h2 th:text="${patient.id} == null ? 'Ajouter un Patient' : 'Modifier le Patient'" class="mb-4"></h2>
 
-  <form th:action="@{/save}" th:object="${patient}" method="post">
+  <form th:action="@{/admin/save}" th:object="${patient}" method="post">
     <input type="hidden" th:field="*{id}"/>
     <div class="mb-3">
       <label>Nom :</label>
@@ -34,9 +36,9 @@
       <input type="number" class="form-control" th:field="*{score}" required/>
     </div>
     <button type="submit" class="btn btn-primary">Enregistrer</button>
-    <a th:href="@{/index}" class="btn btn-secondary">Annuler</a>
+    <a th:href="@{/user/index}" class="btn btn-secondary">Annuler</a>
   </form>
 </div>
-
+</div>
 </body>
 </html>

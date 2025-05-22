@@ -29,7 +29,7 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class="container-fluid">
-        <a class="navbar-brand" th:href="@{/index}">
+        <a class="navbar-brand" th:href="@{/user/index}">
             <img src="/images/img.png" alt="Logo" style="width:40px;" class="rounded-pill me-2">
             Gestion Patients
         </a>
@@ -43,17 +43,22 @@
                 <!-- Dropdown -->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button"
-                       data-bs-toggle="dropdown" aria-expanded="false">
+                       data-bs-toggle="dropdown" aria-expanded="false" th:text="${#authentication.name}">
                         Actions
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end">
-                        <li><a class="dropdown-item" th:href="@{/formPatient}">Nouveau Patient</a></li>
-                        <li><a class="dropdown-item" th:href="@{/index}">Modifier un Patient</a></li>
+                        <li th:if="${#authorization.expression('hasRole(''ADMIN'')')}"><a class="dropdown-item" th:href="@{/admin/formPatient}">Nouveau Patient</a></li>
+                        <li th:if="${#authorization.expression('hasRole(''ADMIN'')')}"><a class="dropdown-item" th:href="@{/user/index}">Modifier un Patient</a></li>
                         <li>
-                            <form class="d-flex px-3" th:action="@{/index}" method="get">
+                            <form class="d-flex px-3" th:action="@{/user/index}" method="get">
                                 <input class="form-control form-control-sm me-2" type="search" name="keyword"
                                        placeholder="Chercher..." aria-label="Chercher">
                                 <button class="btn btn-sm btn-outline-primary" type="submit">OK</button>
+                            </form>
+                        </li>
+                        <li>
+                            <form method="post" th:action="@{/logout}">
+                                <button class="dropdown-item" type="submit">Logout</button>
                             </form>
                         </li>
                     </ul>
